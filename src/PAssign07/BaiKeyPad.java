@@ -22,7 +22,7 @@ public class BaiKeyPad extends KeyPadPane{
 	
 	// Added a Icon to this Button = HELL!
 	protected Button btnCancel = new Button("");
-	protected ImageView backSpace = new ImageView(new Image(getClass().getResource("/image/us.gif").toExternalForm()));
+	protected ImageView backSpace = new ImageView(new Image(getClass().getResource("/image/backspace.png").toExternalForm()));
 
 	public BaiKeyPad() {
 		// Extra parts Specific to this File.
