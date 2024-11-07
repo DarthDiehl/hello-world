@@ -73,6 +73,17 @@ public class BaiKeyPad extends KeyPadPane{
 				String userInputCopy2 = tfuserInput.getText();
 				if(!userInputCopy2.isEmpty() && userInputCopy2.length() == 4) {
 					tfuserInput.setText("Welcome - PIN is Accepted");
+					
+					// Produces a puppy pic. ur welcome.
+					Stage stage1 = new Stage();
+					Pane puppyPane = new Pane();
+					ImageView puppy = new ImageView(new Image(getClass().getResource("/image/backspace.png").toExternalForm()));
+					puppyPane.getChildren().add(puppy);
+					Scene scene1 = new Scene(puppyPane);
+					stage1.setTitle("Puppy!!!");
+					stage1.setScene(scene1);
+					stage1.show();
+					
 				} else {
 					tfuserInput.setText("Error - Only 4 Digits");					
 				}
