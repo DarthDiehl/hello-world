@@ -1,6 +1,9 @@
 package PAssign07;
+import java.util.ArrayList;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -8,51 +11,58 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class BaiKeyPad extends KeyPadPane{
 	protected Label lbluserNum;
 	protected TextField tfuserInput;
-	protected GridPane atmDisplay = new GridPane();
 	protected Button btnEnter = new Button("ENTER");
 	protected Button btnClear = new Button("CLEAR");
-	protected Button btnBlank3 = new Button("");
-	protected HBox disBttns = new HBox(5);
-	protected VBox opBttns = new VBox(2);
-	
-	// Added a Icon to this Button = HELL!
 	protected Button btnCancel = new Button("");
+	protected Button btnBlank3 = new Button("");
 	protected ImageView backSpace = new ImageView(new Image(getClass().getResource("/image/backspace.png").toExternalForm()));
+
+	// Wrapper Classes for use in PAssign07
+	protected VBox opBttns = new VBox(2);
+	protected HBox disBttns = new HBox(5);
+	protected GridPane atmDisplay = new GridPane();
 
 	public BaiKeyPad() {
 		// Extra parts Specific to this File.
-		lbluserNum = new Label("Enter PIN:");
+		lbluserNum = new Label("Enter 4-Digit PIN:");
 		tfuserInput = new TextField();
 		tfuserInput.setPromptText("PIN");
+
 
 		// Styling
 		btnEnter.setStyle("-fx-background-color: green;");
 		btnCancel.setStyle("-fx-background-color: yellow;");
 		btnClear.setStyle("-fx-background-color: red;");
-		// Binding Button Size.
-		btnBlank3.prefWidthProperty().bind(btnEnter.widthProperty());
-		btnBlank3.prefHeightProperty().bind(btn0.heightProperty());
-		btnClear.prefWidthProperty().bind(btnEnter.widthProperty());
-		btnClear.prefHeightProperty().bind(btn0.heightProperty());
-		// Just for the BackSpace Button
-		btnCancel.prefWidthProperty().bind(btnEnter.widthProperty());
-		btnCancel.prefHeightProperty().bind(btn0.heightProperty());
-		backSpace.fitWidthProperty().bind(btnEnter.widthProperty());
-		backSpace.fitHeightProperty().bind(btn0.heightProperty());
-		backSpace.setPreserveRatio(true);
-		// add Icon to Button
 		btnCancel.setGraphic(backSpace);
 
-		
-		// Erases all contents in tfuserInput - Works
+		// Set button dimensions
+		// Tried binding but was complicated
+		double buttonWidth = 60;
+		double buttonHeight = 20;
+
+		btnEnter.setPrefSize(buttonWidth, buttonHeight);
+		btnCancel.setPrefSize(buttonWidth, buttonHeight);
+		btnClear.setPrefSize(buttonWidth, buttonHeight);
+		btnBlank3.setPrefSize(buttonWidth, buttonHeight);
+
+		// Resize and style the backspace image
+		backSpace.setFitWidth(buttonWidth * 0.6); 
+		backSpace.setFitHeight(buttonHeight * 0.6);
+
+		// Customize the Prof.Williams event handlers to produce input into textField.
+		registerEventHandlers();
+
+		// OnAction Clear Button
 		btnClear.setOnAction(e -> tfuserInput.clear());
 
-		// Trim the last number entered in Pin - Works
+		// OnAction BackSpace Button
 		btnCancel.setOnAction(e -> {
 			try {
 				String userInputCopy = tfuserInput.getText();
@@ -67,12 +77,26 @@ public class BaiKeyPad extends KeyPadPane{
 			}
 		});
 
-		// Want this to check that a valid pin is entered.
+		// OnAction Enter Button
 		btnEnter.setOnAction(e -> {
 			try {
 				String userInputCopy2 = tfuserInput.getText();
 				if(!userInputCopy2.isEmpty() && userInputCopy2.length() == 4) {
-					tfuserInput.setText("Welcome - PIN is Accepted");
+					tfuserInput.setText("Welcome - PIN: Accepted");
+					
+					// Produces a picture of "Courage".
+					Stage stage1 = new Stage();
+					Pane puppyPane = new Pane();
+					ImageView puppy = new ImageView(new Image(getClass().getResource("/image/puppy.png").toExternalForm()));
+					puppy.setFitWidth(200);
+					puppy.setFitHeight(200);
+					puppy.setPreserveRatio(true);
+					puppyPane.getChildren().add(puppy);
+					Scene scene1 = new Scene(puppyPane,150,200);
+					stage1.setTitle("Puppy!!!");
+					stage1.setScene(scene1);
+					stage1.show();
+
 				} else {
 					tfuserInput.setText("Error - Only 4 Digits");					
 				}
@@ -81,7 +105,7 @@ public class BaiKeyPad extends KeyPadPane{
 			}
 
 		});
-		
+
 		// Adding the HBox to the VBox
 		opBttns.getChildren().addAll(btnEnter, btnCancel, btnClear, btnBlank3);
 		disBttns.getChildren().addAll(this, opBttns);
@@ -94,5 +118,18 @@ public class BaiKeyPad extends KeyPadPane{
 		atmDisplay.setAlignment(Pos.CENTER);
 		this.setPadding(new Insets(2));
 		tfuserInput.setStyle("-fx-font-style: italic");
+	}
+
+	// Override registerEventHandlers to handle numeric button presses
+	@Override
+	protected void registerEventHandlers() {
+		ArrayList<Button> currList = (copyListButtons != null) ? copyListButtons : listButtons;
+		for (Button btn : currList) {
+			// New!
+			// Only assign actions for numeric buttons (0-9)
+			if (btn.getText().matches("\\d")) {  // Check if button text is a digit
+				btn.setOnAction(e -> tfuserInput.appendText(btn.getText()));
+			}
+		}
 	}
 }

@@ -13,6 +13,7 @@ public class PAssign07 extends Application {
 	
 		// Setting the Scene using the Custom Instance.
 		Scene scene = new Scene(keyPad.atmDisplay, 200, 200);
+		
 		// Want to Give a Grey area for the scene
 		keyPad.atmDisplay.setStyle("-fx-background-color: grey;");
 
