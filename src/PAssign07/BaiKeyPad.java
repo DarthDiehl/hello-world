@@ -15,6 +15,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * File: BaiKeyPad.java
+ * Class: CSCI 1302
+ * Author: Bailey Diehl
+ * Created on: Nov 1, 2024
+ * Last Modified: Nov 8, 2024
+ * Description: It makes an ATM Machine Lock Screen that shows an image when opened.
+ * GitHub Link: https://github.com/DarthDiehl/hello-world
+ */
+
 public class BaiKeyPad extends KeyPadPane{
 	protected Label lbluserNum;
 	protected TextField tfuserInput;
@@ -43,7 +53,7 @@ public class BaiKeyPad extends KeyPadPane{
 		btnCancel.setGraphic(backSpace);
 
 		// Set button dimensions
-		// Tried binding but was complicated
+		// Tried binding but it was complicated
 		double buttonWidth = 60;
 		double buttonHeight = 20;
 
@@ -106,7 +116,7 @@ public class BaiKeyPad extends KeyPadPane{
 
 		});
 
-		// Adding the HBox to the VBox
+		// Adding all the Buttons together
 		opBttns.getChildren().addAll(btnEnter, btnCancel, btnClear, btnBlank3);
 		disBttns.getChildren().addAll(this, opBttns);
 		disBttns.setPadding(new Insets(5));
@@ -120,7 +130,7 @@ public class BaiKeyPad extends KeyPadPane{
 		tfuserInput.setStyle("-fx-font-style: italic");
 	}
 
-	// Override registerEventHandlers to handle numeric button presses
+	// Override register event handlers to handle numeric button presses
 	@Override
 	protected void registerEventHandlers() {
 		ArrayList<Button> currList = (copyListButtons != null) ? copyListButtons : listButtons;
