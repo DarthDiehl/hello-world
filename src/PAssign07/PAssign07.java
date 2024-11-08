@@ -3,6 +3,16 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * File: PAssign07.java
+ * Class: CSCI 1302
+ * Author: Bailey Diehl
+ * Created on: Nov 1, 2024
+ * Last Modified: Nov 8, 2024
+ * Description: Calls Custom Made Pane and Displays it.
+ * GitHub Link: https://github.com/DarthDiehl/hello-world
+ */
+
 public class PAssign07 extends Application {
 	
 	@Override
